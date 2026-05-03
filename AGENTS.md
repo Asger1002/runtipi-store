@@ -1,48 +1,84 @@
+This repository is managed with jujutsu, and the command 'jj'. It also uses beads to manage agentic work. Make sure you always use both appropriately.
 
 
-<!-- BEGIN BEADS INTEGRATION v:1 profile:minimal hash:ca08a54f -->
-## Beads Issue Tracker
-
-This project uses **bd (beads)** for issue tracking. Run `bd prime` to see full workflow context and commands.
-
-### Quick Reference
+### beads (bd) Quick Reference
 
 ```bash
-bd ready              # Find available work
-bd show <id>          # View issue details
-bd update <id> --claim  # Claim work
-bd close <id>         # Complete work
+# Find ready work (no blockers)
+bd ready --json
+
+# Find ready work including future deferred issues
+bd ready --include-deferred --json
+
+# Create new issue
+bd create "Issue title" -t bug|feature|task -p 0-4 -d "Description" --json
+
+# Create issue with due date and defer (GH#820)
+bd create "Task" --due=+6h              # Due in 6 hours
+bd create "Task" --defer=tomorrow       # Hidden from bd ready until tomorrow
+bd create "Task" --due="next monday" --defer=+1h  # Both
+
+# Update issue status
+bd update <id> --status in_progress --json
+
+# Update issue with due/defer dates
+bd update <id> --due=+2d                # Set due date
+bd update <id> --defer=""               # Clear defer (show immediately)
+
+# Link discovered work
+bd dep add <discovered-id> <parent-id> --type discovered-from
+
+# Complete work
+bd close <id> --reason "Done" --json
+
+# Show dependency tree
+bd dep tree <id>
+
+# Get issue details
+bd show <id> --json
+
+# Query issues by time-based scheduling (GH#820)
+bd list --deferred              # Show issues with defer_until set
+bd list --defer-before=tomorrow # Deferred before tomorrow
+bd list --defer-after=+1w       # Deferred after one week from now
+bd list --due-before=+2d        # Due within 2 days
+bd list --due-after="next monday" # Due after next Monday
+bd list --overdue               # Due date in past (not closed)
 ```
 
-### Rules
+### Workflow
 
-- Use `bd` for ALL task tracking — do NOT use TodoWrite, TaskCreate, or markdown TODO lists
-- Run `bd prime` for detailed command reference and session close protocol
-- Use `bd remember` for persistent knowledge — do NOT use MEMORY.md files
+1. **Check for ready work**: Run `bd ready` to see what's unblocked
+2. **Claim your task**: `bd update <id> --claim` (atomic compare-and-swap)
+3. **Work on it**: Implement, test, document
+4. **Discover new work**: If you find bugs or TODOs, create issues:
+   - `bd create "Found bug in auth" -t bug -p 1 --json`
+   - Link it: `bd dep add <new-id> <current-id> --type discovered-from`
+5. **Complete**: `bd close <id> --reason "Implemented"`
 
-## Session Completion
+### Issue Types
 
-**When ending a work session**, you MUST complete ALL steps below. Work is NOT complete until `git push` succeeds.
+- `bug` - Something broken that needs fixing
+- `feature` - New functionality
+- `task` - Work item (tests, docs, refactoring)
+- `epic` - Large feature composed of multiple issues
+- `chore` - Maintenance work (dependencies, tooling)
 
-**MANDATORY WORKFLOW:**
+### Priorities
 
-1. **File issues for remaining work** - Create issues for anything that needs follow-up
-2. **Run quality gates** (if code changed) - Tests, linters, builds
-3. **Update issue status** - Close finished work, update in-progress items
-4. **PUSH TO REMOTE** - This is MANDATORY:
-   ```bash
-   git pull --rebase
-   bd dolt push
-   git push
-   git status  # MUST show "up to date with origin"
-   ```
-5. **Clean up** - Clear stashes, prune remote branches
-6. **Verify** - All changes committed AND pushed
-7. **Hand off** - Provide context for next session
+- `0` - Critical (security, data loss, broken builds)
+- `1` - High (major features, important bugs)
+- `2` - Medium (nice-to-have features, minor bugs)
+- `3` - Low (polish, optimization)
+- `4` - Backlog (future ideas)
 
-**CRITICAL RULES:**
-- Work is NOT complete until `git push` succeeds
-- NEVER stop before pushing - that leaves work stranded locally
-- NEVER say "ready to push when you are" - YOU must push
-- If push fails, resolve and retry until it succeeds
-<!-- END BEADS INTEGRATION -->
+### Dependency Types
+
+- `blocks` - Hard dependency (issue X blocks issue Y)
+- `related` - Soft relationship (issues are connected)
+- `parent-child` - Epic/subtask relationship
+- `discovered-from` - Track issues discovered during work
+
+Only `blocks` dependencies affect the ready work queue.
+
+Use 'bd' for task tracking

@@ -52,12 +52,9 @@ bd close <id>         # Complete work
 
 ## Build & Test
 
-_Add your build and test commands here_
-
 ```bash
-# Example:
-# npm install
-# npm test
+bun install          # Install dependencies
+bun test             # Run all app validation tests
 ```
 
 ## Architecture Overview
