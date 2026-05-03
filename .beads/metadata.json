@@ -1,0 +1,7 @@
+{
+  "database": "dolt",
+  "backend": "dolt",
+  "dolt_mode": "embedded",
+  "dolt_database": "runtipi_store",
+  "project_id": "24cbdedc-ba16-4e19-9c55-f194ce0d4905"
+}
