@@ -1,0 +1,89 @@
+# Honcho Docker Compose for Tipi/Runtipi
+#
+# Uses a pre-built image from GitHub Container Registry.
+# Rebuild instructions: apps/honcho/Dockerfile
+
+services:
+  honcho-api:
+    image: ghcr.io/asger1002/honcho:latest
+    entrypoint: ["sh", "/app/docker/entrypoint.sh"]
+    depends_on:
+      honcho-db:
+        condition: service_healthy
+      honcho-redis:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      - DB_CONNECTION_URI=postgresql+psycopg://postgres:postgres@honcho-db:5432/postgres
+      - CACHE_URL=redis://honcho-redis:6379/0?suppress=true
+      - CACHE_ENABLED=true
+      - AUTH_USE_AUTH=false
+    env_file:
+      - path: /root/runtipi/app-data/my-store/honcho/app.env
+        required: false
+    restart: unless-stopped
+    networks:
+      - honcho-net
+    x-runtipi:
+      is_main: true
+      internal_port: 8000
+
+  honcho-deriver:
+    image: ghcr.io/asger1002/honcho:latest
+    entrypoint: ["/app/.venv/bin/python", "-m", "src.deriver"]
+    depends_on:
+      honcho-db:
+        condition: service_healthy
+      honcho-redis:
+        condition: service_healthy
+    environment:
+      - DB_CONNECTION_URI=postgresql+psycopg://postgres:postgres@honcho-db:5432/postgres
+      - CACHE_URL=redis://honcho-redis:6379/0?suppress=true
+      - CACHE_ENABLED=true
+    env_file:
+      - path: /root/runtipi/app-data/my-store/honcho/app.env
+        required: false
+    restart: unless-stopped
+    networks:
+      - honcho-net
+
+  honcho-db:
+    image: pgvector/pgvector:pg15
+    restart: unless-stopped
+    command: ["postgres", "-c", "max_connections=200"]
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - ${APP_DATA_DIR}/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ${APP_DATA_DIR}/pgdata:/var/lib/postgresql/data/
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - honcho-net
+
+  honcho-redis:
+    image: redis:8.2
+    restart: unless-stopped
+    volumes:
+      - ${APP_DATA_DIR}/redis-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - honcho-net
+
+networks:
+  honcho-net:
+    driver: bridge
+
+x-runtipi:
+  schema_version: 2
