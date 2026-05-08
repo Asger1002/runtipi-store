@@ -20,7 +20,7 @@ services:
       - CACHE_ENABLED=true
       - AUTH_USE_AUTH=false
     env_file:
-      - path: ${APP_DATA_DIR}/app.env
+      - path: /root/runtipi/app-data/my-store/honcho/app.env
         required: false
     restart: unless-stopped
     networks:
@@ -42,7 +42,7 @@ services:
       - CACHE_URL=redis://honcho-redis:6379/0?suppress=true
       - CACHE_ENABLED=true
     env_file:
-      - path: ${APP_DATA_DIR}/app.env
+      - path: /root/runtipi/app-data/my-store/honcho/app.env
         required: false
     restart: unless-stopped
     networks:
