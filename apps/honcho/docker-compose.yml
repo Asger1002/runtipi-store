@@ -13,7 +13,7 @@ services:
       honcho-redis:
         condition: service_healthy
     ports:
-      - "127.0.0.1:8000:8000"
+      - ${APP_PORT}:8000
     environment:
       - DB_CONNECTION_URI=postgresql+psycopg://postgres:postgres@honcho-db:5432/postgres
       - CACHE_URL=redis://honcho-redis:6379/0?suppress=true
