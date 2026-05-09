@@ -1,11 +1,17 @@
 # Honcho Docker Compose for Tipi/Runtipi
 #
-# Uses a pre-built image from GitHub Container Registry.
-# Rebuild instructions: apps/honcho/Dockerfile
+# Builds locally from the Dockerfile in this directory.
+#
+# Based on upstream docker-compose.yml.example, adapted for runtipi:
+#   - Uses runtipi variables for port (${APP_PORT}) and data paths (${APP_DATA_DIR})
+#   - Includes x-runtipi annotation for service discovery
+#   - Adds dedicated network for service isolation
 
 services:
   honcho-api:
-    image: ghcr.io/asger1002/honcho:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
     entrypoint: ["sh", "/app/docker/entrypoint.sh"]
     depends_on:
       honcho-db:
@@ -28,7 +34,9 @@ services:
       internal_port: 8000
 
   honcho-deriver:
-    image: ghcr.io/asger1002/honcho:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
     entrypoint: ["/app/.venv/bin/python", "-m", "src.deriver"]
     depends_on:
       honcho-db:
