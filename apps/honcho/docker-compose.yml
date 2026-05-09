@@ -19,9 +19,7 @@ services:
       - CACHE_URL=redis://honcho-redis:6379/0?suppress=true
       - CACHE_ENABLED=true
       - AUTH_USE_AUTH=false
-    env_file:
-      - path: /root/runtipi/app-data/my-store/honcho/app.env
-        required: false
+      - LLM_OPENAI_API_KEY=${LLM_OPENAI_API_KEY}
     restart: unless-stopped
     networks:
       - honcho-net
@@ -41,9 +39,7 @@ services:
       - DB_CONNECTION_URI=postgresql+psycopg://postgres:postgres@honcho-db:5432/postgres
       - CACHE_URL=redis://honcho-redis:6379/0?suppress=true
       - CACHE_ENABLED=true
-    env_file:
-      - path: /root/runtipi/app-data/my-store/honcho/app.env
-        required: false
+      - LLM_OPENAI_API_KEY=${LLM_OPENAI_API_KEY}
     restart: unless-stopped
     networks:
       - honcho-net
