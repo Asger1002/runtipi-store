@@ -4,7 +4,7 @@ services:
     container_name: hermes
     restart: unless-stopped
     command: gateway run
-    shm_size: 1g
+    shm_size: 2g
     ports:
       - "${HERMES_API_PORT:-8642}:8642"
     volumes:
