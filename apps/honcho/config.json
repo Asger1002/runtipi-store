@@ -18,7 +18,7 @@
       "type": "password",
       "label": "LLM API Key",
       "required": true,
-      "env_variable": "LLM_OPENAI_API_KEY"
+      "env_variable": "OPENAI_API_KEY"
     }
   ],
   "supported_architectures": ["amd64", "arm64"],

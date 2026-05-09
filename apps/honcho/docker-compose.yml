@@ -19,7 +19,7 @@ services:
       - CACHE_URL=redis://honcho-redis:6379/0?suppress=true
       - CACHE_ENABLED=true
       - AUTH_USE_AUTH=false
-      - LLM_OPENAI_API_KEY=${LLM_OPENAI_API_KEY}
+      - LLM_OPENAI_API_KEY=${OPENAI_API_KEY}
     restart: unless-stopped
     networks:
       - honcho-net
