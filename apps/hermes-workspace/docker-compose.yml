@@ -1,0 +1,24 @@
+services:
+  hermes-workspace:
+    image: ghcr.io/outsourc-e/hermes-workspace:latest
+    container_name: hermes-workspace
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT}:3000"
+    environment:
+      - HERMES_API_URL=${HERMES_API_URL:-http://host.docker.internal:8642}
+      - HERMES_ALLOW_INSECURE_REMOTE=1
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - hermes-workspace-net
+    x-runtipi:
+      is_main: true
+      internal_port: 3000
+
+networks:
+  hermes-workspace-net:
+    driver: bridge
+
+x-runtipi:
+  schema_version: 2

@@ -1,5 +1,3 @@
-runtipi-store/apps/hermes-agent/metadata/description.md
-```
 # Hermes Agent
 
 A self-hosted AI agent by [Nous Research](https://nousresearch.com). Hermes runs as a persistent gateway that connects to your preferred chat platform (Telegram, Discord, Slack, WhatsApp) and/or exposes an OpenAI-compatible API. A built-in web dashboard lets you manage configuration, sessions, memories, skills, and scheduled jobs from your browser.

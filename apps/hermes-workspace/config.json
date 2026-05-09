@@ -1,0 +1,31 @@
+{
+  "name": "Hermes Workspace",
+  "id": "hermes-workspace",
+  "available": true,
+  "exposable": true,
+  "dynamic_config": true,
+  "port": 3000,
+  "tipi_version": 1,
+  "version": "latest",
+  "categories": ["utilities", "ai"],
+  "description": "Hermes Workspace is a web-based development environment for Hermes Agent. It provides a collaborative workspace that connects to your Hermes Agent gateway for building and testing agents.",
+  "short_desc": "Web-based development environment for Hermes Agent.",
+  "author": "outsourc-e",
+  "source": "https://github.com/outsourc-e/hermes-workspace",
+  "website": "https://github.com/outsourc-e/hermes-workspace",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Hermes Agent API URL",
+      "required": true,
+      "default": "http://host.docker.internal:8642",
+      "env_variable": "HERMES_API_URL",
+      "hint": "URL of the Hermes Agent gateway API. Use http://host.docker.internal:<port> if running on the same host, or the full URL if remote."
+    }
+  ],
+  "supported_architectures": ["amd64", "arm64"],
+  "created_at": 1746288000000,
+  "updated_at": 1746288000000,
+  "min_tipi_version": "4.5.0",
+  "force_pull": true
+}
