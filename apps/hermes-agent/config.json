@@ -7,16 +7,56 @@
   "port": 9119,
   "tipi_version": 1,
   "version": "latest",
-  "categories": ["utilities"],
+  "categories": ["utilities", "ai"],
   "description": "Hermes Agent is a self-hosted AI agent by Nous Research. It runs a persistent gateway (connecting to Telegram, Discord, Slack, WhatsApp, or via OpenAI-compatible API) alongside a web dashboard. Terminal commands are executed in isolated Docker containers for sandboxed code execution.",
   "short_desc": "Self-hosted AI agent with web dashboard by Nous Research.",
   "author": "nousresearch",
   "source": "https://github.com/NousResearch/hermes-agent",
   "website": "https://hermes-agent.nousresearch.com",
-  "form_fields": [],
+  "form_fields": [
+    {
+      "type": "number",
+      "label": "Gateway API Port",
+      "required": false,
+      "default": 8642,
+      "env_variable": "HERMES_API_PORT",
+      "hint": "External port for the OpenAI-compatible API server. Maps to internal port 8642."
+    },
+    {
+      "type": "password",
+      "label": "API Server Key",
+      "required": false,
+      "env_variable": "API_SERVER_KEY",
+      "hint": "Optional key to secure API access (min 8 chars). Generate one with: openssl rand -hex 32"
+    },
+    {
+      "type": "text",
+      "label": "API CORS Origins",
+      "required": false,
+      "default": "*",
+      "env_variable": "API_SERVER_CORS_ORIGINS",
+      "hint": "Comma-separated allowed CORS origins for the API server."
+    },
+    {
+      "type": "number",
+      "label": "Container UID",
+      "required": false,
+      "default": 1000,
+      "env_variable": "HERMES_UID",
+      "hint": "User ID for the process inside the container. Match your host user's UID (run 'id -u') for correct file permissions on the data volume."
+    },
+    {
+      "type": "number",
+      "label": "Container GID",
+      "required": false,
+      "default": 1000,
+      "env_variable": "HERMES_GID",
+      "hint": "Group ID for the process inside the container. Match your host user's GID (run 'id -g') for correct file permissions on the data volume."
+    }
+  ],
   "supported_architectures": ["amd64", "arm64"],
   "created_at": 1746288000000,
-  "updated_at": 1746288000000,
+  "updated_at": 1746817075000,
   "min_tipi_version": "4.5.0",
   "force_pull": true
 }

@@ -1,63 +1,56 @@
+runtipi-store/apps/hermes-agent/metadata/description.md
+```
 # Hermes Agent
 
 A self-hosted AI agent by [Nous Research](https://nousresearch.com). Hermes runs as a persistent gateway that connects to your preferred chat platform (Telegram, Discord, Slack, WhatsApp) and/or exposes an OpenAI-compatible API. A built-in web dashboard lets you manage configuration, sessions, memories, skills, and scheduled jobs from your browser.
 
 ## Architecture
 
-This app runs two containers:
+Hermes runs in a single container:
 
-- **hermes** — the gateway process. Handles chat platform connections, tool execution, memory, and scheduling. Exposes an OpenAI-compatible API on port 8642 (internal only).
-- **hermes-dashboard** — the web UI on port 9119. Read-only access to the data directory; detects gateway health via `http://hermes:8642`.
+- **Gateway** — the main process (`gateway run`). Handles chat platform connections, tool execution, memory, and scheduling. Exposes an OpenAI-compatible API on port 8642.
+- **Dashboard** — the web UI on port 9119 runs as a background side-process inside the same container (enabled via `HERMES_DASHBOARD=1`). This is required because the dashboard's gateway-liveness detection relies on a shared PID namespace with the gateway process.
 
-Both containers share the same data volume (`/opt/data`) and the Docker socket, enabling the **Docker terminal backend** — shell commands the agent runs are executed in fresh, isolated Docker containers with security hardening (capabilities dropped, no privilege escalation, PID limits). This is important for safe code execution on a server.
+The container mounts your data directory at `/opt/data` and the Docker socket, enabling the **Docker terminal backend** — shell commands the agent runs are executed in fresh, isolated Docker containers with security hardening (capabilities dropped, no privilege escalation, PID limits).
 
-## Initial Setup
+## Before You Start
 
-On first install, the data volume is bootstrapped automatically (default `config.yaml`, `.env.example` → `.env`). Before the gateway can connect to any AI provider or chat platform, you need to configure your API keys.
+This app assumes you already have a working Hermes Agent data directory (the container mounts it at `/opt/data`). If you're setting up from scratch, the entrypoint bootstraps default config files — but you'll still need to configure your API keys and model provider.
 
-**Option 1 — via Runtipi terminal / SSH into the host:**
-```bash
-docker exec -it <hermes-container-name> /opt/hermes/.venv/bin/hermes config set OPENAI_API_KEY sk-...
-# or
-docker exec -it <hermes-container-name> /opt/hermes/.venv/bin/hermes config set ANTHROPIC_API_KEY sk-ant-...
-```
+Your data directory will be at the Runtipi app data path for hermes-agent under the `data/` subdirectory. It maps directly to what Hermes expects at `/opt/data` inside the container.
 
-**Option 2 — edit the .env file directly:**
-```bash
-# On the host, edit the data directory's .env:
-nano /path/to/runtipi/app-data/hermes-agent/data/.env
-```
+## Connecting to a Local Inference Server
 
-**Option 3 — run the interactive setup wizard:**
-```bash
-docker run -it --rm \
-  -v /path/to/runtipi/app-data/hermes-agent/data:/opt/data \
-  nousresearch/hermes-agent setup
-```
+If you run a local inference server (vLLM, Ollama, etc.) on your Runtipi host, configure the model in your data directory's `config.yaml`:
 
-After configuring keys, restart the app in Runtipi to apply.
-
-## Docker Terminal Backend
-
-The `/var/run/docker.sock` is mounted into both containers so Hermes can use the **Docker terminal backend** for sandboxed code execution. To activate it, set in your config:
-
-```bash
-docker exec -it <hermes-container-name> /opt/hermes/.venv/bin/hermes config set terminal.backend docker
-```
-
-Or edit `config.yaml` in the data directory:
 ```yaml
-terminal:
-  backend: docker
-  docker_image: "nikolaik/python-nodejs:python3.11-nodejs20"
-  container_persistent: true
+model:
+  provider: custom
+  model: my-model
+  base_url: http://host.docker.internal:8000/v1
+  api_key: "none"
 ```
+
+For Ollama:
+```yaml
+model:
+  provider: custom
+  model: llama3
+  base_url: http://host.docker.internal:11434/v1
+  api_key: "none"
+```
+
+See the [Docker guide](https://hermes-agent.nousresearch.com/docs/user-guide/docker#connecting-to-local-inference-servers) for more options (including Docker Compose setups with shared networks).
 
 ## Resources
 
-- Memory: 4 GB (gateway) + 512 MB (dashboard) recommended
-- CPU: 2 cores (gateway) + 0.5 cores (dashboard)
-- Disk: 2+ GB for data volume (grows with sessions, skills, and memories)
+| Resource | Minimum | Recommended |
+|----------|---------|-------------|
+| Memory | 1 GB | 4 GB |
+| CPU | 1 core | 2 cores |
+| Disk (data volume) | 500 MB | 2+ GB |
+
+Browser automation (Playwright/Chromium) is the most memory-hungry feature. Without it 1 GB is sufficient; with it allocate at least 2 GB.
 
 ## Links
 
