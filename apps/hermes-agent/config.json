@@ -5,7 +5,7 @@
   "exposable": true,
   "dynamic_config": true,
   "port": 9119,
-  "tipi_version": 2,
+  "tipi_version": 3,
   "version": "sha-bfc84bdc6f85c14715e06d5fa83192ea3e7c7f79",
   "categories": ["utilities", "ai"],
   "description": "Hermes Agent is a self-hosted AI agent by Nous Research. It runs a persistent gateway (connecting to Telegram, Discord, Slack, WhatsApp, or via OpenAI-compatible API) alongside a web dashboard. Terminal commands are executed in isolated Docker containers for sandboxed code execution.",
