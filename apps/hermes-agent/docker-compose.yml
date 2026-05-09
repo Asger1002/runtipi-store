@@ -1,6 +1,6 @@
 services:
   hermes:
-    image: nousresearch/hermes-agent:latest
+    image: nousresearch/hermes-agent:sha-bfc84bdc6f85c14715e06d5fa83192ea3e7c7f79
     container_name: hermes
     restart: unless-stopped
     command: gateway run
@@ -12,8 +12,8 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       - HERMES_DASHBOARD=1
-      - HERMES_UID=${HERMES_UID:-1000}
-      - HERMES_GID=${HERMES_GID:-1000}
+      - HERMES_UID=${HERMES_UID:-0}
+      - HERMES_GID=${HERMES_GID:-0}
       - API_SERVER_ENABLED=true
       - API_SERVER_HOST=0.0.0.0
       - API_SERVER_KEY=${API_SERVER_KEY:-}

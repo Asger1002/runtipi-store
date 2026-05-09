@@ -8,3 +8,4 @@ node_modules/
 
 .env
 *.rdb
+apps/hermes-agent/docs.docker.md
