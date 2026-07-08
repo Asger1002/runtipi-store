@@ -12,7 +12,7 @@ services:
       - dictionaries=${COLLABORA_DICTIONARIES:-en_US da_DK}
       - extra_params=${COLLABORA_EXTRA_PARAMS:---o:ssl.enable=false --o:ssl.termination=true --o:welcome.enable=false}
     healthcheck:
-      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:9980/hosting/discovery >/dev/null || exit 1"]
+      test: ["CMD-SHELL", "test -f /etc/coolwsd/coolwsd.xml"]
       interval: 30s
       timeout: 10s
       retries: 5
