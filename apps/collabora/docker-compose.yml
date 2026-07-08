@@ -9,6 +9,9 @@ services:
       - coolconfig update-system-template; exec setpriv --reuid=1001 --regid=1001 --init-groups /start-collabora-online.sh
     cap_add:
       - MKNOD
+      - SYS_ADMIN
+    security_opt:
+      - apparmor=unconfined
     environment:
       - aliasgroup1=${COLLABORA_ALIASGROUP1:-https://nextcloud.catla-spica.ts.net:443}
       - server_name=${COLLABORA_SERVER_NAME:-collabora.catla-spica.ts.net}
