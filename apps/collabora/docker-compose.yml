@@ -16,7 +16,7 @@ services:
       - password=${COLLABORA_ADMIN_PASSWORD}
       - dictionaries=${COLLABORA_DICTIONARIES:-en_US da_DK}
       - DONT_GEN_SSL_CERT=true
-      - extra_params=${COLLABORA_EXTRA_PARAMS:---o:ssl.enable=false --o:ssl.termination=true --o:welcome.enable=false}
+      - extra_params=${COLLABORA_EXTRA_PARAMS:---o:ssl.enable=false --o:ssl.termination=true --o:welcome.enable=false --o:mount_jail_tree=false}
     healthcheck:
       test: ["CMD-SHELL", "test -f /etc/coolwsd/coolwsd.xml"]
       interval: 30s

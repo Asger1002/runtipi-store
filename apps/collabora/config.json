@@ -66,9 +66,9 @@
       "type": "text",
       "label": "Extra Collabora parameters",
       "required": false,
-      "default": "--o:ssl.enable=false --o:ssl.termination=true --o:welcome.enable=false",
+      "default": "--o:ssl.enable=false --o:ssl.termination=true --o:welcome.enable=false --o:mount_jail_tree=false",
       "env_variable": "COLLABORA_EXTRA_PARAMS",
-      "hint": "Advanced loolwsd/coolwsd options. Defaults are for TLS termination at Runtipi/Tailscale."
+      "hint": "Advanced coolwsd options. Defaults are for TLS termination at Runtipi/Tailscale and disable bind-mounted jail trees in Docker environments without SYS_ADMIN."
     }
   ],
   "supported_architectures": [
