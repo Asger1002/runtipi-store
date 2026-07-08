@@ -34,10 +34,10 @@ This app is configured as an external WOPI document server; it is not the embedd
 
 ## Allowed WOPI host
 
-The **Allowed WOPI host** field controls which Nextcloud/Seafile host may connect to this Collabora instance. For your hs1 Nextcloud over Tailscale, use:
+The **Allowed WOPI host** field controls which Nextcloud/Seafile host may connect to this Collabora instance. For a Runtipi Nextcloud app on the same Docker network, use the internal callback URL:
 
 ```text
-https://nextcloud.catla-spica.ts.net:443
+http://nextcloud:80
 ```
 
-Add or change this value if you later want another WOPI client to use the same Collabora server.
+In Nextcloud Office, configure the public/browser Collabora URL separately as `https://collabora.example.com`. Add or change the allowed WOPI host if you later want another WOPI client to use the same Collabora server.

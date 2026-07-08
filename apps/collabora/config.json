@@ -36,9 +36,9 @@
       "type": "text",
       "label": "Allowed WOPI host",
       "required": true,
-      "default": "https://nextcloud.catla-spica.ts.net:443",
+      "default": "http://nextcloud:80",
       "env_variable": "COLLABORA_ALIASGROUP1",
-      "hint": "Nextcloud/Seafile URL allowed to connect to Collabora. For Nextcloud Office, use your Nextcloud URL including :443."
+      "hint": "Internal WOPI callback URL allowed to connect to Collabora. For a Runtipi Nextcloud app on the same Docker network, http://nextcloud:80 is usually correct."
     },
     {
       "type": "text",

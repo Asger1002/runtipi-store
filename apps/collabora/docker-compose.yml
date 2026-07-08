@@ -2,6 +2,9 @@ services:
   collabora:
     image: ${COLLABORA_IMAGE:-collabora/code:26.04.2.1.1}
     restart: unless-stopped
+    user: "0"
+    entrypoint: ["/bin/sh", "-c"]
+    command: "coolconfig update-system-template; exec setpriv --reuid=1001 --regid=1001 --init-groups /start-collabora-online.sh"
     cap_add:
       - MKNOD
     environment:
@@ -10,6 +13,7 @@ services:
       - username=${COLLABORA_ADMIN_USER:-admin}
       - password=${COLLABORA_ADMIN_PASSWORD}
       - dictionaries=${COLLABORA_DICTIONARIES:-en_US da_DK}
+      - DONT_GEN_SSL_CERT=true
       - extra_params=${COLLABORA_EXTRA_PARAMS:---o:ssl.enable=false --o:ssl.termination=true --o:welcome.enable=false}
     healthcheck:
       test: ["CMD-SHELL", "test -f /etc/coolwsd/coolwsd.xml"]
