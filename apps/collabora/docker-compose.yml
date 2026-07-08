@@ -11,8 +11,6 @@ services:
       - password=${COLLABORA_ADMIN_PASSWORD}
       - dictionaries=${COLLABORA_DICTIONARIES:-en_US da_DK}
       - extra_params=${COLLABORA_EXTRA_PARAMS:---o:ssl.enable=false --o:ssl.termination=true --o:welcome.enable=false}
-    volumes:
-      - ${APP_DATA_DIR}/config:/etc/coolwsd
     healthcheck:
       test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:9980/hosting/discovery >/dev/null || exit 1"]
       interval: 30s
