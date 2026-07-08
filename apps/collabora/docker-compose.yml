@@ -1,0 +1,27 @@
+services:
+  collabora:
+    image: ${COLLABORA_IMAGE:-collabora/code:26.04.2.1.1}
+    restart: unless-stopped
+    cap_add:
+      - MKNOD
+    environment:
+      - aliasgroup1=${COLLABORA_ALIASGROUP1:-https://nextcloud.catla-spica.ts.net:443}
+      - server_name=${COLLABORA_SERVER_NAME:-collabora.catla-spica.ts.net}
+      - username=${COLLABORA_ADMIN_USER:-admin}
+      - password=${COLLABORA_ADMIN_PASSWORD}
+      - dictionaries=${COLLABORA_DICTIONARIES:-en_US da_DK}
+      - extra_params=${COLLABORA_EXTRA_PARAMS:---o:ssl.enable=false --o:ssl.termination=true --o:welcome.enable=false}
+    volumes:
+      - ${APP_DATA_DIR}/config:/etc/coolwsd
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:9980/hosting/discovery >/dev/null || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    x-runtipi:
+      is_main: true
+      internal_port: 9980
+
+x-runtipi:
+  schema_version: 2

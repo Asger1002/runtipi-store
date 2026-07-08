@@ -1,0 +1,95 @@
+{
+  "name": "Seafile",
+  "id": "seafile",
+  "available": true,
+  "exposable": true,
+  "dynamic_config": true,
+  "port": 8085,
+  "tipi_version": 1,
+  "version": "13.0-latest",
+  "categories": [
+    "utilities",
+    "data",
+    "media"
+  ],
+  "description": "Seafile Community Edition is a self-hosted file sync and sharing platform with libraries, versioning, sharing, and web access.",
+  "short_desc": "Self-hosted file sync and sharing platform.",
+  "author": "Seafile Ltd.",
+  "source": "https://github.com/haiwen/seafile",
+  "website": "https://www.seafile.com/",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Seafile hostname",
+      "required": true,
+      "default": "seafile.catla-spica.ts.net",
+      "env_variable": "SEAFILE_SERVER_HOSTNAME",
+      "hint": "Public hostname for Seafile, without https://."
+    },
+    {
+      "type": "text",
+      "label": "Seafile protocol",
+      "required": true,
+      "default": "https",
+      "env_variable": "SEAFILE_SERVER_PROTOCOL",
+      "hint": "Use https when Seafile is exposed through Runtipi, Tailscale Serve, or another TLS reverse proxy."
+    },
+    {
+      "type": "text",
+      "label": "Admin email",
+      "required": true,
+      "default": "me@example.com",
+      "env_variable": "INIT_SEAFILE_ADMIN_EMAIL"
+    },
+    {
+      "type": "password",
+      "label": "Admin password",
+      "required": true,
+      "env_variable": "INIT_SEAFILE_ADMIN_PASSWORD",
+      "hint": "Initial Seafile admin password. Used only on first startup."
+    },
+    {
+      "type": "password",
+      "label": "Database root password",
+      "required": true,
+      "env_variable": "INIT_SEAFILE_MYSQL_ROOT_PASSWORD",
+      "hint": "MariaDB root password. Used by Seafile to create its databases/users on first startup."
+    },
+    {
+      "type": "password",
+      "label": "Seafile database password",
+      "required": true,
+      "env_variable": "SEAFILE_MYSQL_DB_PASSWORD",
+      "hint": "Password for the seafile MariaDB user."
+    },
+    {
+      "type": "password",
+      "label": "JWT private key",
+      "required": true,
+      "env_variable": "JWT_PRIVATE_KEY",
+      "hint": "Random secret at least 32 characters long. Generate with: openssl rand -hex 32"
+    },
+    {
+      "type": "password",
+      "label": "Redis password",
+      "required": false,
+      "env_variable": "REDIS_PASSWORD",
+      "hint": "Optional password for the internal Redis cache. Leave empty to run Redis without auth on the private app network."
+    },
+    {
+      "type": "text",
+      "label": "Time zone",
+      "required": false,
+      "default": "Etc/UTC",
+      "env_variable": "TIME_ZONE"
+    }
+  ],
+  "supported_architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "created_at": 1783546817115,
+  "updated_at": 1783546817115,
+  "min_tipi_version": "4.5.0",
+  "force_pull": false
+}
