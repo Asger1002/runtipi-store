@@ -1,6 +1,6 @@
 # Honcho - Self-hosted LLM Memory Engine
 # Builds from https://github.com/plastic-labs/honcho
-#
+# Pinned to upstream release: v3.2.0 (bump the --branch pin below to update)
 # Based on upstream Dockerfile.example, adapted for runtipi:
 #   - Clones the source at build time (no pre-existing source in context)
 #   - Includes workaround for uv build-standalone Python prefix
@@ -24,7 +24,7 @@ WORKDIR /app
 # ── Stage 1: Clone dependency metadata (for Docker layer caching) ─────
 # Clone shallow, extract only lockfile + project config first so that
 # dependency installation can be cached independently of source changes.
-RUN git clone --depth 1 https://github.com/plastic-labs/honcho.git /tmp/honcho && \
+RUN git clone --depth 1 --branch v3.2.0 https://github.com/plastic-labs/honcho.git /tmp/honcho && \
     cp /tmp/honcho/uv.lock /tmp/honcho/pyproject.toml /app/
 
 # Enable bytecode compilation

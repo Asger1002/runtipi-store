@@ -5,8 +5,8 @@
   "exposable": true,
   "dynamic_config": true,
   "port": 9229,
-  "tipi_version": 1,
-  "version": "latest",
+  "tipi_version": 2,
+  "version": "3.2.0",
   "categories": ["utilities", "ai"],
   "description": "Honcho is an AI-native cross-session memory engine by Plastic Labs. It provides persistent user modeling with dialectic reasoning, session-scoped context injection, semantic search, and persistent conclusions. Self-hosted with PostgreSQL + pgvector.",
   "short_desc": "Self-hosted LLM memory engine with dialectic reasoning.",
@@ -23,7 +23,7 @@
   ],
   "supported_architectures": ["amd64", "arm64"],
   "created_at": 1746600000000,
-  "updated_at": 1746600000000,
+  "updated_at": 1790079012200,
   "min_tipi_version": "4.5.0",
   "force_pull": false
 }
