@@ -5,7 +5,7 @@ A personal app store for [Runtipi](https://github.com/meienberger/runtipi).
 ## Apps
 
 - **whoami** - Tiny Go server that prints OS info and HTTP request details (for testing)
-- **hermes-agent** - Self-hosted AI agent with web dashboard (Nous Research)
+- **nextcloud** - Nextcloud 35 + built-in Collabora office editing, Tailscale-only access
 
 ## Adding a new app
 
