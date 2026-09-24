@@ -6,7 +6,7 @@ Self-hosted file sync and share, with **Collabora Online built in** (LibreOffice
 
 This app is designed to be reached **only through your tailnet** — there is no public internet exposure:
 
-- **Browser**: `https://nextcloud.hs1.catla-spica.ts.net` via Tailscale Serve (valid Let's Encrypt cert, no Cloudflare, no public DNS).
+- **Browser**: `https://nextcloud.catla-spica.ts.net` via Tailscale Serve (valid Let's Encrypt cert, no Cloudflare, no public DNS). Note: Tailscale Services use the tailnet root domain — no `hs1.` prefix.
 - Nextcloud trusts this hostname (`NEXTCLOUD_TRUSTED_DOMAINS`) and is told the scheme is HTTPS (`OVERWRITEPROTOCOL=https`), so CalDAV/CardDAV, desktop and mobile clients all work.
 
 ## What runs

@@ -9,7 +9,7 @@
   "tipi_version": 1,
   "version": "35.0.0",
   "categories": ["data"],
-  "description": "Nextcloud 35 with built-in Collabora (LibreOffice-based) document and spreadsheet editing. Accessible over Tailscale via https://nextcloud.hs1.catla-spica.ts.net — no public internet exposure, no Cloudflare. Includes PostgreSQL 17, Redis, and a background cron container.",
+  "description": "Nextcloud 35 with built-in Collabora (LibreOffice-based) document and spreadsheet editing. Accessible over Tailscale via https://nextcloud.catla-spica.ts.net — no public internet exposure, no Cloudflare. Includes PostgreSQL 17, Redis, and a background cron container.",
   "short_desc": "Nextcloud 35 + Collabora office suite, Tailscale-first",
   "author": "Nextcloud GmbH",
   "source": "https://github.com/nextcloud/server",
