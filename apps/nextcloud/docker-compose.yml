@@ -17,8 +17,8 @@ services:
       - 'REDIS_HOST=redis-nextcloud'
       - 'NC_TRUSTED_PROXIES=172.16.0.0/12'
       - 'OVERWRITEPROTOCOL=https'
-      - 'OVERWRITECLIURL=https://nextcloud-catla-spica.hs1.catla-spica.ts.net'
-      - 'NEXTCLOUD_TRUSTED_DOMAINS=nextcloud-catla-spica.hs1.catla-spica.ts.net tipi.local nextcloud collabora'
+      - 'OVERWRITECLIURL=https://nextcloud.hs1.catla-spica.ts.net'
+      - 'NEXTCLOUD_TRUSTED_DOMAINS=nextcloud.hs1.catla-spica.ts.net tipi.local nextcloud collabora'
       - 'PHP_MEMORY_LIMIT=${PHP_MEMORY_LIMIT:-1024M}'
       - 'PHP_UPLOAD_LIMIT=${PHP_UPLOAD_LIMIT:-1024M}'
     healthcheck:
@@ -62,7 +62,7 @@ services:
     image: 'collabora/code:25.04.4.2.1'
     restart: unless-stopped
     environment:
-      - 'aliasgroup1=https://nextcloud-catla-spica\.hs1\.catla-spica\.ts\.net:443'
+      - 'aliasgroup1=https://nextcloud\.hs1\.catla-spica\.ts\.net:443'
       - 'extra_params=--o:ssl.enable=false --o:ssl.termination=true --o:welcome.enable=false --o:storage.wopi.host[0]=192\.168\.0\.0/16'
       - 'dictionaries=en_US da_DK'
       - 'DONT_GEN_SSL_CERT=true'
@@ -78,3 +78,6 @@ services:
       timeout: 10s
       retries: 5
       start_period: 90s
+
+x-runtipi:
+  schema_version: 2
