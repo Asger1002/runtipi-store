@@ -4,11 +4,6 @@ services:
     restart: unless-stopped
     ports:
       - '${APP_PORT}:9980'
-    user: "0"
-    entrypoint:
-      - /bin/sh
-      - -c
-      - coolconfig update-system-template; exec setpriv --reuid=1001 --regid=1001 --init-groups /start-collabora-online.sh
     cap_add:
       - MKNOD
       - SYS_ADMIN
