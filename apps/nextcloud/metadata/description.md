@@ -21,9 +21,10 @@ This app is designed to be reached **only through your tailnet** — there is no
 
 ## Office editing
 
-Collabora is pre-wired: `richdocuments` can be enabled in Nextcloud's app store once logged in, and Nextcloud automatically discovers the WOPI endpoint on the internal network. Only the Tailscale HTTPS hostname is allowed as WOPI callback, so no admin URL fiddling is needed.
+Office editing (documents, spreadsheets, presentations) is provided by the separate **collabora** app from this store (Collabora Online / CODE), not bundled here. In Nextcloud → Settings → Administration → Nextcloud Office, point it at the collabora app's URL and register the Collabora service per `tailscale/served-services.md` in the hs1-admin repo.
 
 ## Notes
 
 - Newest stable Nextcloud release line (35.0.0) — newer than the official Runtipi store's 34.0.4 pin.
-- Not based on Nextcloud's official AIO image; instead the same "all-in-one" outcome is achieved with a single compose project bundling Nextcloud + Collabora, avoiding the AIO image's built-in Caddy/TLS which doesn't fit behind Runtipi's Traefik.
+- Not based on Nextcloud's official AIO image; pairs with the separate `collabora` app from this store for office editing.
+- Collabora container is NOT bundled — install the `collabora` app alongside it.
