@@ -1,6 +1,6 @@
 services:
   collabora:
-    image: ${COLLABORA_IMAGE:-collabora/code:26.04.2.1.1}
+    image: ${COLLABORA_IMAGE:-collabora/code:26.04.4.2.1}
     restart: unless-stopped
     user: "0"
     entrypoint:

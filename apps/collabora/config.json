@@ -5,12 +5,12 @@
   "exposable": true,
   "dynamic_config": true,
   "port": 9980,
-  "tipi_version": 1,
-  "version": "26.04.2.1.1",
+  "tipi_version": 2,
+  "version": "26.04.4.2.1",
   "categories": [
     "utilities"
   ],
-  "description": "Collabora Online is a self-hosted LibreOffice-based document editing server for Nextcloud Office and other WOPI clients.",
+  "description": "Collabora Online is a self-hosted, LibreOffice-based document editing server for Nextcloud Office and other WOPI clients. 26.04.x is compatible with Nextcloud 34/35. Pair with the my-store nextcloud app: in Nextcloud's Nextcloud Office settings enter the Collabora server URL and keep the WOPI host default.",
   "short_desc": "Self-hosted office document server for Nextcloud Office.",
   "author": "Collabora Productivity",
   "source": "https://github.com/CollaboraOnline/online",
@@ -20,7 +20,7 @@
       "type": "text",
       "label": "Collabora image",
       "required": true,
-      "default": "collabora/code:26.04.2.1.1",
+      "default": "collabora/code:26.04.4.2.1",
       "env_variable": "COLLABORA_IMAGE",
       "hint": "Public Docker image to run. Collabora's freely available image is CODE; if you have access to a supported Collabora Online image, put it here."
     },
@@ -36,9 +36,9 @@
       "type": "text",
       "label": "Allowed WOPI host",
       "required": true,
-      "default": "http://nextcloud:80",
+      "default": "https://nextcloud\\.catla-spica\\.ts\\.net:443",
       "env_variable": "COLLABORA_ALIASGROUP1",
-      "hint": "Internal WOPI callback URL allowed to connect to Collabora. For a Runtipi Nextcloud app on the same Docker network, http://nextcloud:80 is usually correct."
+      "hint": "Regexp of Nextcloud URLs allowed to talk to Collabora (WOPI). Default trusts the Tailscale svc hostname nextcloud.catla-spica.ts.net over HTTPS."
     },
     {
       "type": "text",
@@ -76,7 +76,7 @@
     "arm64"
   ],
   "created_at": 1783546817115,
-  "updated_at": 1783546817115,
+  "updated_at": 1758715200000,
   "min_tipi_version": "4.5.0",
   "force_pull": false
 }
