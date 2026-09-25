@@ -2,6 +2,8 @@ services:
   collabora:
     image: ${COLLABORA_IMAGE:-collabora/code:26.04.4.2.1}
     restart: unless-stopped
+    ports:
+      - '${APP_PORT}:9980'
     user: "0"
     entrypoint:
       - /bin/sh
