@@ -1,0 +1,49 @@
+services:
+  watts-android:
+    image: watts-android:16-ca-v1
+    pull_policy: never
+    privileged: true
+    shm_size: 512m
+    command:
+      - ro.waydroid.software_rendering=1
+    volumes:
+      - ${APP_DATA_DIR}/android-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "[ \"$(getprop sys.boot_completed)\" = 1 ]"]
+      interval: 10s
+      timeout: 5s
+      retries: 18
+      start_period: 30s
+    restart: unless-stopped
+    networks:
+      - watts-internal
+
+  watts-collector:
+    image: watts-on-data-reader:0.2.0
+    pull_policy: never
+    depends_on:
+      watts-android:
+        condition: service_healthy
+    environment:
+      - SNAPSHOT_TIME=${SNAPSHOT_TIME}
+      - TIME_ZONE=${TIME_ZONE}
+      - HEATING_DEVICE_ID=${HEATING_DEVICE_ID}
+      - WATER_DEVICE_ID=${WATER_DEVICE_ID}
+      - ANDROID_HOST=watts-android
+      - ANDROID_PORT=5555
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+      - ${APP_DATA_DIR}/mitmproxy:/mitmproxy
+    restart: unless-stopped
+    networks:
+      - watts-internal
+    x-runtipi:
+      is_main: true
+      internal_port: 8080
+
+networks:
+  watts-internal:
+    driver: bridge
+
+x-runtipi:
+  schema_version: 2

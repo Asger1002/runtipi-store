@@ -1,0 +1,53 @@
+{
+  "name": "Watts On Data Reader",
+  "id": "watts-on-data-reader",
+  "available": true,
+  "exposable": false,
+  "dynamic_config": true,
+  "port": 8787,
+  "tipi_version": 1,
+  "version": "0.2.0",
+  "categories": ["utilities"],
+  "description": "Once-daily private heating and water collection from Watts On. A persistent Android sidecar preserves the signed-in app session, while the collector requests the two most recent complete local days and stores only available readings. Trailing all-zero provider placeholders are withheld without discarding valid earlier zero-usage intervals.",
+  "short_desc": "Once-daily Watts heating and water history collector.",
+  "author": "Asger1002",
+  "source": "http://hs1.catla-spica.ts.net:8195/asger1002/watts_on_data_reader",
+  "website": "https://developer.watts.dk",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Daily snapshot time (24-hour HH:MM)",
+      "required": false,
+      "default": "08:00",
+      "regex": "^(?:[01]\\d|2[0-3]):[0-5]\\d$",
+      "pattern_error": "Use 24-hour HH:MM, for example 08:00.",
+      "env_variable": "SNAPSHOT_TIME",
+      "hint": "One attempt per local calendar day. A failed attempt is not retried that day; the next two-day overlap catches up automatically."
+    },
+    {
+      "type": "text",
+      "label": "IANA time zone",
+      "required": false,
+      "default": "Europe/Copenhagen",
+      "env_variable": "TIME_ZONE",
+      "hint": "Controls both the schedule and local-day boundaries."
+    },
+    {
+      "type": "password",
+      "label": "Heating device ID",
+      "required": true,
+      "env_variable": "HEATING_DEVICE_ID"
+    },
+    {
+      "type": "password",
+      "label": "Water device ID",
+      "required": true,
+      "env_variable": "WATER_DEVICE_ID"
+    }
+  ],
+  "supported_architectures": ["amd64"],
+  "created_at": 1790616877683,
+  "updated_at": 1790616877683,
+  "min_tipi_version": "4.5.0",
+  "force_pull": false
+}
