@@ -6,7 +6,6 @@ A personal app store for [Runtipi](https://github.com/meienberger/runtipi).
 
 - **whoami** - Tiny Go server that prints OS info and HTTP request details (for testing)
 - **nextcloud** - Nextcloud 35 + built-in Collabora office editing, Tailscale-only access
-- **watts-on-data-reader** - Once-daily, two-day-overlap Watts heating and water collector
 
 ## Adding a new app
 
