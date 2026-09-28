@@ -19,7 +19,7 @@ services:
       - watts-internal
 
   watts-collector:
-    image: watts-on-data-reader:0.2.1
+    image: watts-on-data-reader:0.2.0
     pull_policy: never
     depends_on:
       watts-android:
@@ -27,7 +27,6 @@ services:
     environment:
       - SNAPSHOT_TIME=${SNAPSHOT_TIME}
       - TIME_ZONE=${TIME_ZONE}
-      - LOOKBACK_DAYS=${LOOKBACK_DAYS}
       - HEATING_DEVICE_ID=${HEATING_DEVICE_ID}
       - WATER_DEVICE_ID=${WATER_DEVICE_ID}
       - ANDROID_HOST=watts-android
