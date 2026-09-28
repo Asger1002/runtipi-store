@@ -5,10 +5,10 @@
   "exposable": false,
   "dynamic_config": true,
   "port": 8787,
-  "tipi_version": 1,
-  "version": "0.2.0",
+  "tipi_version": 2,
+  "version": "0.2.1",
   "categories": ["utilities"],
-  "description": "Once-daily private heating and water collection from Watts On. A persistent Android sidecar preserves the signed-in app session, while the collector requests the two most recent complete local days and stores only available readings. Trailing all-zero provider placeholders are withheld without discarding valid earlier zero-usage intervals.",
+  "description": "Once-daily private heating and water collection from Watts On. A persistent Android sidecar preserves the signed-in app session, while the collector requests a configurable two- or three-day overlap (three by default) and stores only available readings. Trailing all-zero provider placeholders are withheld without discarding valid earlier zero-usage intervals.",
   "short_desc": "Once-daily Watts heating and water history collector.",
   "author": "Asger1002",
   "source": "http://hs1.catla-spica.ts.net:8195/asger1002/watts_on_data_reader",
@@ -22,7 +22,7 @@
       "regex": "^(?:[01]\\d|2[0-3]):[0-5]\\d$",
       "pattern_error": "Use 24-hour HH:MM, for example 08:00.",
       "env_variable": "SNAPSHOT_TIME",
-      "hint": "One attempt per local calendar day. A failed attempt is not retried that day; the next two-day overlap catches up automatically."
+      "hint": "One attempt per local calendar day. A failed attempt is not retried that day; the rolling overlap catches up automatically."
     },
     {
       "type": "text",
@@ -31,6 +31,18 @@
       "default": "Europe/Copenhagen",
       "env_variable": "TIME_ZONE",
       "hint": "Controls both the schedule and local-day boundaries."
+    },
+    {
+      "type": "text",
+      "label": "Rolling overlap",
+      "required": false,
+      "default": "3",
+      "options": [
+        {"label": "3 complete days (recommended)", "value": "3"},
+        {"label": "2 complete days", "value": "2"}
+      ],
+      "env_variable": "LOOKBACK_DAYS",
+      "hint": "Still uses only one heating GET and one water GET. Overlapping timestamps are updated idempotently."
     },
     {
       "type": "password",
@@ -47,7 +59,7 @@
   ],
   "supported_architectures": ["amd64"],
   "created_at": 1790616877683,
-  "updated_at": 1790616877683,
+  "updated_at": 1790624317693,
   "min_tipi_version": "4.5.0",
   "force_pull": false
 }
